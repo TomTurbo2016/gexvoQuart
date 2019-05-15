@@ -85,10 +85,14 @@ def UploadImage():
             data_url_trimmed = data_url[6:-2]
             id_url = data_url_trimmed[len(data_url_trimmed)-6:];
             b64_url = data_url_trimmed[:-6]; #png-Image!!!
+            
             ## Create txt file for user:
-            if not os.path.exists(PATH_TO_BASE64_TXT_FOLDER + id_url + '.txt'):
-                f = open(PATH_TO_BASE64_TXT_FOLDER + id_url + '.txt', 'x')
-                f.close()
+            #if not os.path.exists(PATH_TO_BASE64_TXT_FOLDER + id_url + '.txt'):
+            #    f = open(PATH_TO_BASE64_TXT_FOLDER + id_url + '.txt', 'x')
+            #    f.close()              
+            f = open(PATH_TO_BASE64_TXT_FOLDER + id_url + '.txt', 'x')
+            f.close()
+            
             ## Save uploaded pic to txt file:
             prefix = 'O' #Original
             saveBase64StringToFile(PATH_TO_BASE64_TXT_FOLDER + id_url + '.txt', prefix + id_url + b64_url)
