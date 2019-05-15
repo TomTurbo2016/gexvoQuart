@@ -81,7 +81,8 @@ def Index():
 async def UploadImage():
     if request.method == "POST":
         try:
-            data_url = str(await request.get_data().decode('utf-8'))
+            data_url = await request.get_data()
+            data_url = str(data_url.decode('utf-8'))
             data_url_trimmed = data_url[6:-2]
             id_url = data_url_trimmed[len(data_url_trimmed)-6:];
             b64_url = data_url_trimmed[:-6]; #png-Image!!!
