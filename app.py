@@ -78,7 +78,7 @@ def Index():
 
 
 @app.route('/upload', methods=['POST'])
-def UploadImage():
+async def UploadImage():
     if request.method == "POST":
         try:
             data_url = str(await request.get_data().decode('utf-8'))
