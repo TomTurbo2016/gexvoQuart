@@ -97,7 +97,7 @@ async def UploadImage():
         except Exception as e:
             print(str(e), file=sys.stderr) #output to Error-Log-File!
             print('Error: ' + str(e))
-        return await jsonify('Success')
+        return jsonify('Success')
 
 
 @app.route('/showPic', methods=['GET', 'POST'])
