@@ -188,9 +188,7 @@ async def ShowPic():
             return await render_template('startPage.html')
     else:
         if request.method == 'POST':
-            #doStyle = request.form.get('doStyle','')
-            doStyle = request.form
-            doStyle = doStyle.get('doStyle','')
+            doStyle = (await request.form).get('doStyle','') #(await request.form).to_dict()          
             
             #data_url = await request.get_data()
             #data_url = str(data_url.decode('utf-8'))
