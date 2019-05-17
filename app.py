@@ -103,14 +103,14 @@ async def UploadImage():
 @app.route('/showPic', methods=['GET', 'POST'])
 async def ShowPic():
     if request.method == 'GET':
-        url_id = request.args.get('id')
+        url_id = await request.args.get('id')
         if url_id is not None:
             prefix = 'O' #Original
             img = openBase64StringFromFile(PATH_TO_BASE64_TXT_FOLDER + url_id + '.txt', prefix + url_id)
             session['url_id'] = url_id
             del prefix
             del url_id
-            return await ("<!DOCTYPE html>"
+            return ("<!DOCTYPE html>"
                     "<html lang='en'>"
                         "<head>"
                             "<link rel='shortcut icon' type='image/png' href='static/otherStuff/favicon.ico'/>"
