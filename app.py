@@ -189,7 +189,7 @@ async def ShowPic():
     else:
         if request.method == 'POST':
             #doStyle = request.form.get('doStyle','')
-            doStyle = request.form()
+            doStyle = request.form
             doStyle = doStyle.get('doStyle','')
             
             #data_url = await request.get_data()
