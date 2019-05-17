@@ -64,11 +64,11 @@ def openBase64StringFromFile(_path, _id):
 
 
 @app.route('/', methods=['GET'])
-def Index():
+async def Index():
     if session.get('url_id') is not None:
         if os.path.exists(PATH_TO_BASE64_TXT_FOLDER + str(session['url_id']) + '.txt'):
             os.remove(PATH_TO_BASE64_TXT_FOLDER + str(session['url_id']) + '.txt')
-    return render_template('startPage.html')
+    return await render_template('startPage.html')
 
 
 @app.route('/upload', methods=['POST'])
@@ -97,11 +97,11 @@ async def UploadImage():
         except Exception as e:
             print(str(e), file=sys.stderr) #output to Error-Log-File!
             print('Error: ' + str(e))
-        return jsonify('Success')
+        return await jsonify('Success')
 
 
 @app.route('/showPic', methods=['GET', 'POST'])
-def ShowPic():
+async def ShowPic():
     if request.method == 'GET':
         url_id = request.args.get('id')
         if url_id is not None:
@@ -110,7 +110,7 @@ def ShowPic():
             session['url_id'] = url_id
             del prefix
             del url_id
-            return("<!DOCTYPE html>"
+            return await ("<!DOCTYPE html>"
                     "<html lang='en'>"
                         "<head>"
                             "<link rel='shortcut icon' type='image/png' href='static/otherStuff/favicon.ico'/>"
@@ -185,10 +185,10 @@ def ShowPic():
                         "</body>"
                     "</html>")
         else:
-            return render_template('startPage.html')
+            return await render_template('startPage.html')
     else:
         if request.method == 'POST':
-            doStyle = request.form.get('doStyle','')
+            doStyle = await request.form.get('doStyle','')
             if doStyle == '1':
                 prefix = 'O' #Original
                 url_id = str(session['url_id'])
@@ -196,19 +196,19 @@ def ShowPic():
                 ioFile.write(base64.b64decode(openBase64StringFromFile(PATH_TO_BASE64_TXT_FOLDER + url_id + '.txt', prefix + url_id)))
                 ioFile.seek(0)
 ####~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~To-Be-Edited~STYLES~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
-                selectedStyle = request.form['stylize']
+                selectedStyle = await request.form['stylize']
                 if selectedStyle == 'mosaic':
-                    downloadFileMosaic()
-                    img = stylize2.main(ioFile, 'mosaic', PATH_TO_STYLE_FILES)
+                    await downloadFileMosaic()
+                    img = await stylize2.main(ioFile, 'mosaic', PATH_TO_STYLE_FILES)
                 elif selectedStyle == 'churchWindow':
-                    downloadFileChurchwindow()
-                    img = stylize2.main(ioFile, 'churchWindow', PATH_TO_STYLE_FILES)
+                    await downloadFileChurchwindow()
+                    img = await stylize2.main(ioFile, 'churchWindow', PATH_TO_STYLE_FILES)
                 else:
-                    return redirect(url_for('style_error_nostyle'))
+                    return await redirect(url_for('style_error_nostyle'))
 ####~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<
-                downloadFile2xSize()
-                img = upscale2.main(img, PATH_TO_SCALE_FILE + '2xSize.pth')
-                img = imageResize2.main2(img) #--> 1/3 downscale
+                await downloadFile2xSize()
+                img = await upscale2.main(img, PATH_TO_SCALE_FILE + '2xSize.pth')
+                img = await imageResize2.main2(img) #--> 1/3 downscale
                 img = Image.fromarray(img)#.astype("uint8")
                 rawBytes = BytesIO()
                 img.save(rawBytes, "JPEG")
@@ -218,7 +218,7 @@ def ShowPic():
                 del url_id
                 del ioFile
                 del rawBytes
-                return("<!DOCTYPE html>"
+                return await ("<!DOCTYPE html>"
                         "<html lang='en'>"
                         "<head>"
                             "<link rel='shortcut icon' type='image/png' href='static/otherStuff/favicon.ico'/>"
@@ -298,7 +298,7 @@ def ShowPic():
                     img = openBase64StringFromFile(PATH_TO_BASE64_TXT_FOLDER + url_id + '.txt', prefix + url_id)
                     del url_id
                     del prefix
-                    return("<!DOCTYPE html>"
+                    return await ("<!DOCTYPE html>"
                             "<html lang='en'>"
                                 "<head>"
                                     "<link rel='shortcut icon' type='image/png' href='static/otherStuff/favicon.ico'/>"
@@ -376,8 +376,8 @@ def ShowPic():
 
 ##Error-Messages:
 @app.route('/FILE_UPLOAD_ERROR_NoFileSelected')
-def file_upload_error_nofile():
-    return (
+async def file_upload_error_nofile():
+    return await (
     "<!doctype html>"
     "<title>Upload File ERROR - No File selected</title>"
     "<h1>No file selected</h1>"
@@ -389,8 +389,8 @@ def file_upload_error_nofile():
     "</script>")
 
 @app.route('/STYLE_ERROR_NoStyleSelected')
-def style_error_nostyle():
-    return (
+async def style_error_nostyle():
+    return await (
     "<!doctype html>"
     "<title>Style ERROR - No Style selected</title>"
     "<h1>No style selected</h1>"
@@ -402,8 +402,8 @@ def style_error_nostyle():
     "</script>")
 
 @app.route('/FILE_UPLOAD_ERROR_NoJPGformat')
-def file_upload_error_nojpg():
-    return (
+async def file_upload_error_nojpg():
+    return await (
     "<!doctype html>"
     "<title>Upload File ERROR - No jpg Format</title>"
     "<h1>File needs to end with .jpg</h1>"
@@ -415,8 +415,8 @@ def file_upload_error_nojpg():
     "</script>")
 
 @app.route('/GENERALERROR')
-def generalError():
-    return (
+async def generalError():
+    return await (
     "<!doctype html>"
     "<title>ERROR</title>"
     "<h1>Something went wrong!</h1>"
