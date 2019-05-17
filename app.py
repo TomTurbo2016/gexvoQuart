@@ -103,7 +103,7 @@ async def UploadImage():
 @app.route('/showPic', methods=['GET', 'POST'])
 async def ShowPic():
     if request.method == 'GET':
-        url_id = await request.args.get('id')
+        url_id = request.args.get('id')
         if url_id is not None:
             prefix = 'O' #Original
             img = openBase64StringFromFile(PATH_TO_BASE64_TXT_FOLDER + url_id + '.txt', prefix + url_id)
