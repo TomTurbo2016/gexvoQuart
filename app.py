@@ -65,7 +65,7 @@ def openBase64StringFromFile(_path, _id):
 
 @app.route('/', methods=['GET'])
 async def Index():
-    if session.get('url_id') is not None:
+    if await session.get('url_id') is not None:
         if os.path.exists(PATH_TO_BASE64_TXT_FOLDER + str(session['url_id']) + '.txt'):
             os.remove(PATH_TO_BASE64_TXT_FOLDER + str(session['url_id']) + '.txt')
     return await render_template('startPage.html')
@@ -73,19 +73,17 @@ async def Index():
 
 @app.route('/upload', methods=['POST'])
 async def UploadImage():
-    if request.method == "POST":
+    if (await request.method) == "POST":
         try:
             data_url = await request.get_data()
             data_url = str(data_url.decode('utf-8'))
             data_url_trimmed = data_url[6:-2]
             id_url = data_url_trimmed[len(data_url_trimmed)-6:];
-            b64_url = data_url_trimmed[:-6]; #png-Image!!!
-            
+            b64_url = data_url_trimmed[:-6]; #png-Image!!!          
             ## Create txt file for user:
             if not os.path.exists(PATH_TO_BASE64_TXT_FOLDER + id_url + '.txt'):
                 f = open(PATH_TO_BASE64_TXT_FOLDER + id_url + '.txt', 'x')
-                f.close()              
-            
+                f.close()       
             ## Save uploaded pic to txt file:
             prefix = 'O' #Original
             saveBase64StringToFile(PATH_TO_BASE64_TXT_FOLDER + id_url + '.txt', prefix + id_url + b64_url)
@@ -102,8 +100,8 @@ async def UploadImage():
 
 @app.route('/showPic', methods=['GET', 'POST'])
 async def ShowPic():
-    if request.method == 'GET':
-        url_id = request.args.get('id')
+    if (await request.method) == 'GET':
+        url_id = (await request.args).get('id')
         if url_id is not None:
             prefix = 'O' #Original
             img = openBase64StringFromFile(PATH_TO_BASE64_TXT_FOLDER + url_id + '.txt', prefix + url_id)
@@ -187,12 +185,8 @@ async def ShowPic():
         else:
             return await render_template('startPage.html')
     else:
-        if request.method == 'POST':
-            doStyle = (await request.form).get('doStyle','') #(await request.form).to_dict()          
-            
-            #data_url = await request.get_data()
-            #data_url = str(data_url.decode('utf-8'))
-            
+        if (await request.method) == 'POST':
+            doStyle = (await request.form).get('doStyle','')
             if doStyle == '1':
                 prefix = 'O' #Original
                 url_id = str(session['url_id'])
