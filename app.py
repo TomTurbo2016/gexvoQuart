@@ -374,8 +374,8 @@ async def ShowPic():
 
 ##Error-Messages:
 @app.route('/FILE_UPLOAD_ERROR_NoFileSelected')
-async def file_upload_error_nofile():
-    return await (
+def file_upload_error_nofile():
+    return (
     "<!doctype html>"
     "<title>Upload File ERROR - No File selected</title>"
     "<h1>No file selected</h1>"
@@ -387,8 +387,8 @@ async def file_upload_error_nofile():
     "</script>")
 
 @app.route('/STYLE_ERROR_NoStyleSelected')
-async def style_error_nostyle():
-    return await (
+def style_error_nostyle():
+    return (
     "<!doctype html>"
     "<title>Style ERROR - No Style selected</title>"
     "<h1>No style selected</h1>"
@@ -400,8 +400,8 @@ async def style_error_nostyle():
     "</script>")
 
 @app.route('/FILE_UPLOAD_ERROR_NoJPGformat')
-async def file_upload_error_nojpg():
-    return await (
+def file_upload_error_nojpg():
+    return (
     "<!doctype html>"
     "<title>Upload File ERROR - No jpg Format</title>"
     "<h1>File needs to end with .jpg</h1>"
@@ -413,8 +413,8 @@ async def file_upload_error_nojpg():
     "</script>")
 
 @app.route('/GENERALERROR')
-async def generalError():
-    return await (
+def generalError():
+    return (
     "<!doctype html>"
     "<title>ERROR</title>"
     "<h1>Something went wrong!</h1>"
