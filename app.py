@@ -196,15 +196,15 @@ async def ShowPic():
 ####~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~To-Be-Edited~STYLES~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
                 selectedStyle = (await request.form)['stylize']
                 if selectedStyle == 'mosaic':
-                    await downloadFileMosaic()
+                    downloadFileMosaic()
                     img = await stylize2.main(ioFile, 'mosaic', PATH_TO_STYLE_FILES)
                 elif selectedStyle == 'churchWindow':
-                    await downloadFileChurchwindow()
+                    downloadFileChurchwindow()
                     img = await stylize2.main(ioFile, 'churchWindow', PATH_TO_STYLE_FILES)
                 else:
                     return await redirect(url_for('style_error_nostyle'))
 ####~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<
-                await downloadFile2xSize()
+                downloadFile2xSize()
                 img = await upscale2.main(img, PATH_TO_SCALE_FILE + '2xSize.pth')
                 img = await imageResize2.main2(img) #--> 1/3 downscale
                 img = Image.fromarray(img)#.astype("uint8")
