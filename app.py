@@ -197,7 +197,7 @@ async def ShowPic():
                 selectedStyle = (await request.form)['stylize']
                 if selectedStyle == 'mosaic':
                     downloadFileMosaic()
-                    img = stylize2.main(ioFile, 'mosaic', PATH_TO_STYLE_FILES)
+                    img = await stylize2.main(ioFile, 'mosaic', PATH_TO_STYLE_FILES)
                 elif selectedStyle == 'churchWindow':
                     downloadFileChurchwindow()
                     img = stylize2.main(ioFile, 'churchWindow', PATH_TO_STYLE_FILES)
