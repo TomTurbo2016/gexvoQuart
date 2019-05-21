@@ -73,7 +73,7 @@ async def Index():
 
 @app.route('/upload', methods=['POST'])
 async def UploadImage():
-    if (await request.method) == "POST":
+    if request.method == "POST":
         try:
             data_url = await request.get_data()
             data_url = str(data_url.decode('utf-8'))
@@ -100,7 +100,7 @@ async def UploadImage():
 
 @app.route('/showPic', methods=['GET', 'POST'])
 async def ShowPic():
-    if (await request.method) == 'GET':
+    if request.method == 'GET':
         url_id = (await request.args).get('id')
         if url_id is not None:
             prefix = 'O' #Original
@@ -185,7 +185,7 @@ async def ShowPic():
         else:
             return await render_template('startPage.html')
     else:
-        if (await request.method) == 'POST':
+        if request.method == 'POST':
             doStyle = (await request.form).get('doStyle','')
             if doStyle == '1':
                 prefix = 'O' #Original
