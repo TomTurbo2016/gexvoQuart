@@ -216,7 +216,7 @@ async def ShowPic():
                 del url_id
                 del ioFile
                 del rawBytes
-                return await ("<!DOCTYPE html>"
+                return ("<!DOCTYPE html>"
                         "<html lang='en'>"
                         "<head>"
                             "<link rel='shortcut icon' type='image/png' href='static/otherStuff/favicon.ico'/>"
@@ -296,7 +296,7 @@ async def ShowPic():
                     img = openBase64StringFromFile(PATH_TO_BASE64_TXT_FOLDER + url_id + '.txt', prefix + url_id)
                     del url_id
                     del prefix
-                    return await ("<!DOCTYPE html>"
+                    return ("<!DOCTYPE html>"
                             "<html lang='en'>"
                                 "<head>"
                                     "<link rel='shortcut icon' type='image/png' href='static/otherStuff/favicon.ico'/>"
