@@ -206,7 +206,7 @@ async def ShowPic():
 ####~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<
                 downloadFile2xSize()
                 img = await upscale2.main(img, PATH_TO_SCALE_FILE + '2xSize.pth')
-                img = await imageResize2.main2(img) #--> 1/3 downscale
+                img = imageResize2.main2(img) #--> 1/3 downscale
                 img = Image.fromarray(img)#.astype("uint8")
                 rawBytes = BytesIO()
                 img.save(rawBytes, "JPEG")
