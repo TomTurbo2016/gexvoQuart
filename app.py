@@ -65,7 +65,7 @@ def openBase64StringFromFile(_path, _id):
 
 @app.route('/', methods=['GET'])
 async def Index():
-    if await session.get('url_id') is not None:
+    if session.get('url_id') is not None:
         if os.path.exists(PATH_TO_BASE64_TXT_FOLDER + str(session['url_id']) + '.txt'):
             os.remove(PATH_TO_BASE64_TXT_FOLDER + str(session['url_id']) + '.txt')
     return await render_template('startPage.html')
