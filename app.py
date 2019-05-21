@@ -194,7 +194,7 @@ async def ShowPic():
                 ioFile.write(base64.b64decode(openBase64StringFromFile(PATH_TO_BASE64_TXT_FOLDER + url_id + '.txt', prefix + url_id)))
                 ioFile.seek(0)
 ####~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~To-Be-Edited~STYLES~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
-                selectedStyle = await request.form['stylize']
+                selectedStyle = (await request.form)['stylize']
                 if selectedStyle == 'mosaic':
                     await downloadFileMosaic()
                     img = await stylize2.main(ioFile, 'mosaic', PATH_TO_STYLE_FILES)
