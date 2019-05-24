@@ -1,8 +1,8 @@
 numpy
+pillow
 torch==1.0.1 -f https://download.pytorch.org/whl/cpu/stable
 uuid
 asyncio
 requests
 opencv-python
 quart
-Pillow
