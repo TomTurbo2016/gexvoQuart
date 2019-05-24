@@ -1,6 +1,7 @@
 numpy
 pillow
 torch==1.0.1 -f https://download.pytorch.org/whl/cpu/stable
+torchvision
 uuid
 asyncio
 requests
